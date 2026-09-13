@@ -29,6 +29,7 @@ repositories {
         name = "ModMaven"
         url = "https://modmaven.dev"
     }
+    maven { url = "https://api.modrinth.com/maven" } //for moonlight and everycompat
 }
 
 base {
@@ -129,20 +130,11 @@ dependencies {
     // We add the full version to localRuntime, not runtimeOnly, so that we do not publish a dependency on it
     localRuntime "mezz.jei:jei-${jei_minecraft_version}-neoforge:${jei_version}"
 
-    // Example mod dependency using a mod jar from ./libs with a flat dir repository
-    // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
-    // The group id is ignored when searching -- in this case, it is "blank"
-    // implementation "blank:coolmod-${mc_version}:${coolmod_version}"
+    implementation "maven.modrinth:twkfQtEc:${moonlight_version}" //moonlight
+    implementation "maven.modrinth:eiktJyw1:${everycomp_version}" //everycompat
 
-    // Example mod dependency using a file as dependency
-    // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
-
-    // Example project dependency using a sister or child project:
-    // implementation project(":myproject")
-
-    // For more info:
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+    runtimeOnly "maven.modrinth:VsM5EDoI:${blueprint_version}" //blueprint for atmopsheric
+    runtimeOnly "maven.modrinth:U9sJOFmJ:${atmospheric_version}" //atmospheric for wood testing
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

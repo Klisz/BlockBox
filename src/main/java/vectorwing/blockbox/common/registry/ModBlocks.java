@@ -218,27 +218,27 @@ public class ModBlocks
 		return new SlabBlock(properties);
 	}
 
-	private static Block palisade(Supplier<Block> spikedForm, @Nullable Supplier<Block> strippedForm, MapColor mapColor) {
+	public static Block palisade(Supplier<Block> spikedForm, @Nullable Supplier<Block> strippedForm, MapColor mapColor) {
 		return palisade(spikedForm, strippedForm, mapColor, SoundType.WOOD);
 	}
 
-	private static Block palisade(Supplier<Block> spikedForm, @Nullable Supplier<Block> strippedForm, MapColor mapColor, SoundType soundType) {
+	public static Block palisade(Supplier<Block> spikedForm, @Nullable Supplier<Block> strippedForm, MapColor mapColor, SoundType soundType) {
 		return new PalisadeBlock(spikedForm, strippedForm, PROPERTIES_PALISADE.mapColor(mapColor).sound(soundType).ignitedByLava());
 	}
 
-	private static Block netherPalisade(Supplier<Block> spikedForm, @Nullable Supplier<Block> strippedForm, MapColor mapColor) {
+	public static Block netherPalisade(Supplier<Block> spikedForm, @Nullable Supplier<Block> strippedForm, MapColor mapColor) {
 		return new PalisadeBlock(spikedForm, strippedForm, PROPERTIES_PALISADE.mapColor(mapColor).sound(SoundType.STEM));
 	}
 
-	private static Block spikedPalisade(@Nullable Supplier<Block> strippedForm, MapColor mapColor) {
+	public static Block spikedPalisade(@Nullable Supplier<Block> strippedForm, MapColor mapColor) {
 		return spikedPalisade(strippedForm, mapColor, SoundType.WOOD);
 	}
 
-	private static Block spikedPalisade(@Nullable Supplier<Block> strippedForm, MapColor mapColor, SoundType soundType) {
+	public static Block spikedPalisade(@Nullable Supplier<Block> strippedForm, MapColor mapColor, SoundType soundType) {
 		return new SpikedPalisadeBlock(strippedForm, PROPERTIES_PALISADE.mapColor(mapColor).sound(soundType).ignitedByLava());
 	}
 
-	private static Block netherSpikedPalisade(@Nullable Supplier<Block> strippedForm, MapColor mapColor) {
+	public static Block netherSpikedPalisade(@Nullable Supplier<Block> strippedForm, MapColor mapColor) {
 		return new SpikedPalisadeBlock(strippedForm, PROPERTIES_PALISADE.mapColor(mapColor).sound(SoundType.STEM));
 	}
 }

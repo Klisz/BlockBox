@@ -1,13 +1,16 @@
 package vectorwing.blockbox;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.resources.ResourceLocation;
+import net.mehvahdjukaar.every_compat.EveryCompat;
+import net.mehvahdjukaar.every_compat.api.EveryCompatAPI;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.loading.LoadingModList;
 import org.slf4j.Logger;
 import vectorwing.blockbox.common.registry.*;
+import vectorwing.blockbox.compat.BlockBoxEveryCompatModule;
 
 @Mod(BlockBox.MODID)
 public class BlockBox
@@ -24,5 +27,11 @@ public class BlockBox
 		ModSounds.SOUNDS.register(modEventBus);
 		ModParticleTypes.PARTICLE_TYPES.register(modEventBus);
 		ModCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
+
+		if(LoadingModList.get().getModFileById("everycomp") != null){ //there is probably a better way to check?
+			BlockBox.LOGGER.info("EveryCompat detected. Starting compat module");
+			EveryCompatAPI.registerModule(new BlockBoxEveryCompatModule(BlockBox.MODID));
+			//EveryCompat.addOptionalModule(BlockBox.MODID, () -> BlockBoxEveryCompatModule.class); //everycompat internal version?
+		}
 	}
 }

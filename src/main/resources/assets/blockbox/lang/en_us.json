@@ -172,5 +172,11 @@
 
   "blockbox.subtitles.sword.carve": "Sword carves",
 
-  "death.attack.blockbox.palisade": "%1$s was skewered by a spiked palisade"
+  "death.attack.blockbox.palisade": "%1$s was skewered by a spiked palisade",
+
+  "block_type.blockbox.seat": "%s Seat",
+  "block_type.blockbox.palisade": "%s Palisade",
+  "block_type.blockbox.spiked_palisade": "Spiked %s Palisade",
+  "block_type.blockbox.stripped_palisade": "Stripped %s Palisade",
+  "block_type.blockbox.stripped_spiked_palisade": "Stripped Spiked Palisade"
 }

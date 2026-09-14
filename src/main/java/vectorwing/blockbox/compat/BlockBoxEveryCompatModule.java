@@ -28,9 +28,20 @@ public class BlockBoxEveryCompatModule extends EveryCompatModule {
     public final SimpleEntrySet<WoodType, Block> strippedPalisade;
     public final SimpleEntrySet<WoodType, Block> strippedSpikedPalisade;
 
+    //texture constants since they are used more than once
+    public static final String BLOCK_OAK_PALISADE_CORE = "block/oak_palisade_core";
+    public static final String BLOCK_OAK_PALISADE_SIDE = "block/oak_palisade_side";
+    public static final String BLOCK_OAK_PALISADE_TOP = "block/oak_palisade_top";
+    public static final String BLOCK_STRIPPED_OAK_PALISADE_CORE = "block/stripped_oak_palisade_core";
+    public static final String BLOCK_STRIPPED_OAK_PALISADE_SIDE = "block/stripped_oak_palisade_side";
+    public static final String BLOCK_STRIPPED_OAK_PALISADE_TOP = "block/stripped_oak_palisade_top";
+
 
     public BlockBoxEveryCompatModule(String modId) {
         super(modId, "bb");
+        //"bb" is not currently used by anything else to my knowledge,
+        //but I think it will cause issues if another mod tries to use the same string for its module?
+        //but it's not like there's a database of everycompat module short IDs
         ResourceLocation creativeTabRL = ModCreativeTabs.TAB_BLOCK_BOX.getId();
 
         this.seat = SimpleEntrySet.builder(WoodType.class, "seat",
@@ -49,7 +60,7 @@ public class BlockBoxEveryCompatModule extends EveryCompatModule {
 
         this.palisade = SimpleEntrySet.builder(WoodType.class, "palisade",
                         getModBlock("oak_palisade"), () -> VanillaWoodTypes.OAK,
-                        w -> w.canBurn() ?
+                        w -> w.canBurn() ?  //only affects sounds? no palisade can burn
                                 ModBlocks.netherPalisade(getPalisadeForm(w, PalisadeForm.SPIKED), getPalisadeForm(w, PalisadeForm.STRIPPED), w.getColor()) :
                                 ModBlocks.palisade(getPalisadeForm(w, PalisadeForm.SPIKED), getPalisadeForm(w, PalisadeForm.STRIPPED), w.getColor())
                         )
@@ -59,9 +70,9 @@ public class BlockBoxEveryCompatModule extends EveryCompatModule {
                 .setTab(getTab(creativeTabRL))
                 .copyParentDrop()
                 .addRecipe(modRes("oak_palisade"))
-                .addTexture(modRes("block/oak_palisade_core"))
-                .addTexture(modRes("block/oak_palisade_side"))
-                .addTexture(modRes("block/oak_palisade_top"))
+                .addTexture(modRes(BLOCK_OAK_PALISADE_CORE))
+                .addTexture(modRes(BLOCK_OAK_PALISADE_SIDE))
+                .addTexture(modRes(BLOCK_OAK_PALISADE_TOP)) //<-- spike texture in here
                 .build();
         this.addEntry(palisade);
         this.spikedPalisade = SimpleEntrySet.builder(WoodType.class, "spiked_palisade",
@@ -72,10 +83,10 @@ public class BlockBoxEveryCompatModule extends EveryCompatModule {
                 .addTag(modRes("spiked_palisades"), Registries.BLOCK, Registries.ITEM)
                 .setTab(getTab(creativeTabRL))
                 .copyParentDrop()
-                .addRecipe(modRes("stripped_oak_palisade"))
-                .addTexture(modRes("block/stripped_oak_palisade_core"))
-                .addTexture(modRes("block/stripped_oak_palisade_side"))
-                .addTexture(modRes("block/stripped_oak_palisade_top"))
+                .addRecipe(modRes("spiked_oak_palisade"))
+                .addTexture(modRes(BLOCK_OAK_PALISADE_CORE))
+                .addTexture(modRes(BLOCK_OAK_PALISADE_SIDE))
+                .addTexture(modRes(BLOCK_OAK_PALISADE_TOP))
                 .build();
         this.addEntry(spikedPalisade);
 
@@ -88,9 +99,9 @@ public class BlockBoxEveryCompatModule extends EveryCompatModule {
                 .setTab(getTab(creativeTabRL))
                 .copyParentDrop()
                 .addRecipe(modRes("stripped_oak_palisade"))
-                .addTexture(modRes("block/stripped_oak_palisade_core"))
-                .addTexture(modRes("block/stripped_oak_palisade_side"))
-                .addTexture(modRes("block/stripped_oak_palisade_top"))
+                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_CORE))
+                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_SIDE))
+                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_TOP))
                 .build();
         this.addEntry(strippedPalisade);
         this.strippedSpikedPalisade = SimpleEntrySet.builder(WoodType.class, "stripped_spiked_palisade",
@@ -101,15 +112,15 @@ public class BlockBoxEveryCompatModule extends EveryCompatModule {
                 .addTag(modRes("spiked_palisades"), Registries.BLOCK, Registries.ITEM)
                 .setTab(getTab(creativeTabRL))
                 .copyParentDrop()
-                .addRecipe(modRes("stripped_oak_palisade"))
-                .addTexture(modRes("block/stripped_oak_palisade_core"))
-                .addTexture(modRes("block/stripped_oak_palisade_side"))
-                .addTexture(modRes("block/stripped_oak_palisade_top"))
+                .addRecipe(modRes("stripped_spiked_oak_palisade"))
+                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_CORE))
+                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_SIDE))
+                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_TOP))
                 .build();
         this.addEntry(strippedSpikedPalisade);
 
     }
-
+    
     public Supplier<Block> getPalisadeForm(WoodType woodType, PalisadeForm palisadeForm){
         return () -> switch (palisadeForm){
             case NORMAL -> palisade.blocks.get(woodType);

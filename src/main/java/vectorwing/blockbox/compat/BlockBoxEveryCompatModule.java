@@ -75,7 +75,7 @@ public class BlockBoxEveryCompatModule extends EveryCompatModule {
                 .addTexture(modRes(BLOCK_OAK_PALISADE_TOP)) //<-- spike texture in here
                 .build();
         this.addEntry(palisade);
-        this.spikedPalisade = SimpleEntrySet.builder(WoodType.class, "spiked_palisade",
+        this.spikedPalisade = SimpleEntrySet.builder(WoodType.class, "palisade", "spiked",
                         getModBlock("spiked_oak_palisade"), () -> VanillaWoodTypes.OAK,
                         w ->  ModBlocks.spikedPalisade(getPalisadeForm(w, PalisadeForm.STRIPPED_SPIKED), w.getColor()))
                 .requiresChildren(LOG)
@@ -90,7 +90,7 @@ public class BlockBoxEveryCompatModule extends EveryCompatModule {
                 .build();
         this.addEntry(spikedPalisade);
 
-        this.strippedPalisade = SimpleEntrySet.builder(WoodType.class, "stripped_palisade",
+        this.strippedPalisade = SimpleEntrySet.builder(WoodType.class, "palisade", "stripped",
                         getModBlock("stripped_oak_palisade"), () -> VanillaWoodTypes.OAK,
                         w ->  ModBlocks.palisade(getPalisadeForm(w, PalisadeForm.STRIPPED_SPIKED), null, w.getColor()))
                 .requiresChildren(LOG)
@@ -104,7 +104,7 @@ public class BlockBoxEveryCompatModule extends EveryCompatModule {
                 .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_TOP))
                 .build();
         this.addEntry(strippedPalisade);
-        this.strippedSpikedPalisade = SimpleEntrySet.builder(WoodType.class, "stripped_spiked_palisade",
+        this.strippedSpikedPalisade = SimpleEntrySet.builder(WoodType.class, "palisade", "stripped_spiked",
                         getModBlock("stripped_spiked_oak_palisade"), () -> VanillaWoodTypes.OAK,
                         w ->  ModBlocks.spikedPalisade(getPalisadeForm(w, PalisadeForm.STRIPPED_SPIKED), w.getColor()))
                 .requiresChildren(LOG)

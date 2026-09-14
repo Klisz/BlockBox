@@ -19,8 +19,6 @@ import java.util.function.Supplier;
 
 import static net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys.*;
 
-//Modeled after WoodGood's BibliocraftLegacyModule:
-//https://github.com/MehVahdJukaar/WoodGood/blob/1.21/neoforge/src/main/java/net/mehvahdjukaar/every_compat/modules/neoforge/bibliocraft/BibliocraftLegacyModule.java
 public class BlockBoxEveryCompatModule extends EveryCompatModule {
 
     public final SimpleEntrySet<WoodType, Block> seat;
@@ -42,20 +40,73 @@ public class BlockBoxEveryCompatModule extends EveryCompatModule {
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .addTag(modRes("wooden_seats"), Registries.BLOCK, Registries.ITEM)
                 .setTab(getTab(creativeTabRL))
-                .addRecipe(modRes("wood/oak/seat"))
+                .addRecipe(modRes("oak_seat"))
+                .copyParentDrop()
+                .addTexture(modRes("block/oak_seat_side"))
+                .addTexture(modRes("block/oak_seat_top"))
                 .build();
         this.addEntry(seat);
 
         this.palisade = SimpleEntrySet.builder(WoodType.class, "palisade",
                         getModBlock("oak_palisade"), () -> VanillaWoodTypes.OAK,
-                        w -> w.canBurn() ? ModBlocks.netherPalisade(getPalisadeForm(w, PalisadeForm.SPIKED), getPalisadeForm(w, PalisadeForm.STRIPPED), w.getColor()) : ModBlocks.palisade(getPalisadeForm(w, PalisadeForm.SPIKED), getPalisadeForm(w, PalisadeForm.STRIPPED), w.getColor()))
+                        w -> w.canBurn() ?
+                                ModBlocks.netherPalisade(getPalisadeForm(w, PalisadeForm.SPIKED), getPalisadeForm(w, PalisadeForm.STRIPPED), w.getColor()) :
+                                ModBlocks.palisade(getPalisadeForm(w, PalisadeForm.SPIKED), getPalisadeForm(w, PalisadeForm.STRIPPED), w.getColor())
+                        )
                 .requiresChildren(LOG) //REASON: recipes
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .addTag(modRes("palisades"), Registries.BLOCK, Registries.ITEM)
                 .setTab(getTab(creativeTabRL))
-                .addRecipe(modRes("wood/oak/palisade"))
+                .copyParentDrop()
+                .addRecipe(modRes("oak_palisade"))
+                .addTexture(modRes("block/oak_palisade_core"))
+                .addTexture(modRes("block/oak_palisade_side"))
+                .addTexture(modRes("block/oak_palisade_top"))
                 .build();
         this.addEntry(palisade);
+        this.spikedPalisade = SimpleEntrySet.builder(WoodType.class, "spiked_palisade",
+                        getModBlock("spiked_oak_palisade"), () -> VanillaWoodTypes.OAK,
+                        w ->  ModBlocks.spikedPalisade(getPalisadeForm(w, PalisadeForm.STRIPPED_SPIKED), w.getColor()))
+                .requiresChildren(LOG)
+                .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
+                .addTag(modRes("spiked_palisades"), Registries.BLOCK, Registries.ITEM)
+                .setTab(getTab(creativeTabRL))
+                .copyParentDrop()
+                .addRecipe(modRes("stripped_oak_palisade"))
+                .addTexture(modRes("block/stripped_oak_palisade_core"))
+                .addTexture(modRes("block/stripped_oak_palisade_side"))
+                .addTexture(modRes("block/stripped_oak_palisade_top"))
+                .build();
+        this.addEntry(spikedPalisade);
+
+        this.strippedPalisade = SimpleEntrySet.builder(WoodType.class, "stripped_palisade",
+                        getModBlock("stripped_oak_palisade"), () -> VanillaWoodTypes.OAK,
+                        w ->  ModBlocks.palisade(getPalisadeForm(w, PalisadeForm.STRIPPED_SPIKED), null, w.getColor()))
+                .requiresChildren(LOG)
+                .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
+                .addTag(modRes("palisades"), Registries.BLOCK, Registries.ITEM)
+                .setTab(getTab(creativeTabRL))
+                .copyParentDrop()
+                .addRecipe(modRes("stripped_oak_palisade"))
+                .addTexture(modRes("block/stripped_oak_palisade_core"))
+                .addTexture(modRes("block/stripped_oak_palisade_side"))
+                .addTexture(modRes("block/stripped_oak_palisade_top"))
+                .build();
+        this.addEntry(strippedPalisade);
+        this.strippedSpikedPalisade = SimpleEntrySet.builder(WoodType.class, "stripped_spiked_palisade",
+                        getModBlock("stripped_spiked_oak_palisade"), () -> VanillaWoodTypes.OAK,
+                        w ->  ModBlocks.spikedPalisade(getPalisadeForm(w, PalisadeForm.STRIPPED_SPIKED), w.getColor()))
+                .requiresChildren(LOG)
+                .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
+                .addTag(modRes("spiked_palisades"), Registries.BLOCK, Registries.ITEM)
+                .setTab(getTab(creativeTabRL))
+                .copyParentDrop()
+                .addRecipe(modRes("stripped_oak_palisade"))
+                .addTexture(modRes("block/stripped_oak_palisade_core"))
+                .addTexture(modRes("block/stripped_oak_palisade_side"))
+                .addTexture(modRes("block/stripped_oak_palisade_top"))
+                .build();
+        this.addEntry(strippedSpikedPalisade);
 
     }
 

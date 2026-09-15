@@ -5,6 +5,7 @@ import net.mehvahdjukaar.every_compat.EveryCompat;
 import net.mehvahdjukaar.every_compat.api.EveryCompatAPI;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.LoadingModList;
@@ -28,7 +29,7 @@ public class BlockBox
 		ModParticleTypes.PARTICLE_TYPES.register(modEventBus);
 		ModCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
 
-		if(LoadingModList.get().getModFileById("everycomp") != null){ //there is probably a better way to check?
+		if(ModList.get().isLoaded("everycomp")){ //there is probably a better way to check?
 			BlockBox.LOGGER.info("EveryCompat detected. Starting compat module");
 			EveryCompatAPI.registerModule(new BlockBoxEveryCompatModule(BlockBox.MODID));
 			//EveryCompat.addOptionalModule(BlockBox.MODID, () -> BlockBoxEveryCompatModule.class); //everycompat internal version?

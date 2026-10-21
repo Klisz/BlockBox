@@ -133,8 +133,10 @@ dependencies {
     implementation "maven.modrinth:twkfQtEc:${moonlight_version}" //moonlight
     implementation "maven.modrinth:eiktJyw1:${everycomp_version}" //everycompat
 
-    runtimeOnly "maven.modrinth:VsM5EDoI:${blueprint_version}" //blueprint for atmopsheric
-    runtimeOnly "maven.modrinth:U9sJOFmJ:${atmospheric_version}" //atmospheric for wood testing
+    localRuntime "maven.modrinth:VsM5EDoI:${blueprint_version}" //blueprint for atmopsheric
+    localRuntime "maven.modrinth:U9sJOFmJ:${atmospheric_version}" //atmospheric for wood testing
+    localRuntime "maven.modrinth:XaDC71GB:${lithostitched_version}" //lithostitched for regions unexplored
+    localRuntime "maven.modrinth:Tkikq67H:${regions_unexplored_version}" //regions unexplored for wood testing (particularly of woodtypes with nonstandard soundtypes)
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

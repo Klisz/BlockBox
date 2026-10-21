@@ -1,5 +1,6 @@
 package vectorwing.blockbox.compat;
 
+import net.mehvahdjukaar.every_compat.api.PaletteStrategies;
 import net.mehvahdjukaar.every_compat.api.SimpleEntrySet;
 import net.mehvahdjukaar.every_compat.modules.EveryCompatModule;
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
@@ -8,6 +9,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import vectorwing.blockbox.common.block.SeatBlock;
 import vectorwing.blockbox.common.registry.ModBlocks;
@@ -58,9 +60,9 @@ public class BlockBoxEveryCompatModule extends EveryCompatModule {
 
         this.palisade = SimpleEntrySet.builder(WoodType.class, "palisade",
                         getModBlock("oak_palisade"), () -> VanillaWoodTypes.OAK,
-                        w -> w.canBurn() ?  //only affects sounds? no palisade can burn
-                                ModBlocks.netherPalisade(getPalisadeForm(w, PalisadeForm.SPIKED), getPalisadeForm(w, PalisadeForm.STRIPPED), w.getColor()) :
-                                ModBlocks.palisade(getPalisadeForm(w, PalisadeForm.SPIKED), getPalisadeForm(w, PalisadeForm.STRIPPED), w.getColor())
+                        w -> w.canBurn() ?
+                                ModBlocks.palisade(getPalisadeForm(w, PalisadeForm.SPIKED), w.hasChild(STRIPPED_LOG) ? getPalisadeForm(w, PalisadeForm.STRIPPED) : null, w.getColor(), getSoundFromChild(w, LOG)) :
+                                ModBlocks.netherPalisade(getPalisadeForm(w, PalisadeForm.SPIKED), w.hasChild(STRIPPED_LOG) ? getPalisadeForm(w, PalisadeForm.STRIPPED) : null, w.getColor(), getSoundFromChild(w, LOG))
                         )
                 .requiresChildren(LOG) //REASON: recipes
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
@@ -68,55 +70,74 @@ public class BlockBoxEveryCompatModule extends EveryCompatModule {
                 .setTab(getTab(creativeTabRL))
                 .copyParentDrop()
                 .addRecipe(modRes("oak_palisade"))
-                .addTexture(modRes(BLOCK_OAK_PALISADE_CORE))
-                .addTexture(modRes(BLOCK_OAK_PALISADE_SIDE))
-                .addTexture(modRes(BLOCK_OAK_PALISADE_TOP)) //<-- spike texture in here
+                .addTexture(modRes(BLOCK_OAK_PALISADE_CORE), PaletteStrategies.LOG_SIDE_STANDARD)
+                .addTexture(modRes(BLOCK_OAK_PALISADE_SIDE), PaletteStrategies.LOG_SIDE_STANDARD)
+                .addTexture(modRes(BLOCK_OAK_PALISADE_TOP), PaletteStrategies.LOG_TOP_STANDARD) //<-- spike texture in here
                 .build();
         this.addEntry(palisade);
         this.spikedPalisade = SimpleEntrySet.builder(WoodType.class, "palisade", "spiked",
                         getModBlock("spiked_oak_palisade"), () -> VanillaWoodTypes.OAK,
-                        w ->  ModBlocks.spikedPalisade(getPalisadeForm(w, PalisadeForm.STRIPPED_SPIKED), w.getColor()))
+                        w -> w.canBurn() ?
+                                ModBlocks.spikedPalisade(w.hasChild(STRIPPED_LOG) ? getPalisadeForm(w, PalisadeForm.STRIPPED_SPIKED) : null, w.getColor(), getSoundFromChild(w, LOG)) :
+                                ModBlocks.netherSpikedPalisade(w.hasChild(STRIPPED_LOG) ? getPalisadeForm(w, PalisadeForm.STRIPPED_SPIKED) : null, w.getColor(), getSoundFromChild(w, LOG))
+                )
                 .requiresChildren(LOG)
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .addTag(modRes("spiked_palisades"), Registries.BLOCK, Registries.ITEM)
                 .setTab(getTab(creativeTabRL))
                 .copyParentDrop()
                 .addRecipe(modRes("spiked_oak_palisade"))
-                .addTexture(modRes(BLOCK_OAK_PALISADE_CORE))
-                .addTexture(modRes(BLOCK_OAK_PALISADE_SIDE))
-                .addTexture(modRes(BLOCK_OAK_PALISADE_TOP))
+                .addTexture(modRes(BLOCK_OAK_PALISADE_CORE), PaletteStrategies.LOG_SIDE_STANDARD)
+                .addTexture(modRes(BLOCK_OAK_PALISADE_SIDE), PaletteStrategies.LOG_SIDE_STANDARD)
+                .addTexture(modRes(BLOCK_OAK_PALISADE_TOP), PaletteStrategies.LOG_TOP_STANDARD)
                 .build();
         this.addEntry(spikedPalisade);
 
         this.strippedPalisade = SimpleEntrySet.builder(WoodType.class, "palisade", "stripped",
                         getModBlock("stripped_oak_palisade"), () -> VanillaWoodTypes.OAK,
-                        w ->  ModBlocks.palisade(getPalisadeForm(w, PalisadeForm.STRIPPED_SPIKED), null, w.getColor()))
-                .requiresChildren(LOG)
+                        w -> w.canBurn() ?
+                                ModBlocks.palisade(getPalisadeForm(w, PalisadeForm.STRIPPED_SPIKED), null, w.getColor(), getSoundFromChild(w, STRIPPED_LOG)) :
+                                ModBlocks.netherPalisade(getPalisadeForm(w, PalisadeForm.STRIPPED_SPIKED), null, w.getColor(), getSoundFromChild(w, STRIPPED_LOG))
+                )
+                .requiresChildren(STRIPPED_LOG)
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .addTag(modRes("palisades"), Registries.BLOCK, Registries.ITEM)
                 .setTab(getTab(creativeTabRL))
                 .copyParentDrop()
                 .addRecipe(modRes("stripped_oak_palisade"))
-                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_CORE))
-                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_SIDE))
-                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_TOP))
+                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_CORE), PaletteStrategies.STRIPPED_LOG_SIDE_STANDARD)
+                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_SIDE), PaletteStrategies.STRIPPED_LOG_SIDE_STANDARD)
+                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_TOP), PaletteStrategies.STRIPPED_LOG_TOP_STANDARD)
                 .build();
         this.addEntry(strippedPalisade);
         this.strippedSpikedPalisade = SimpleEntrySet.builder(WoodType.class, "palisade", "stripped_spiked",
                         getModBlock("stripped_spiked_oak_palisade"), () -> VanillaWoodTypes.OAK,
-                        w ->  ModBlocks.spikedPalisade(getPalisadeForm(w, PalisadeForm.STRIPPED_SPIKED), w.getColor()))
-                .requiresChildren(LOG)
+                        w -> w.canBurn() ?
+                                ModBlocks.spikedPalisade(null, w.getColor(), getSoundFromChild(w, STRIPPED_LOG)) :
+                                ModBlocks.netherSpikedPalisade(null, w.getColor(), getSoundFromChild(w, STRIPPED_LOG))
+                )
+                .requiresChildren(STRIPPED_LOG)
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .addTag(modRes("spiked_palisades"), Registries.BLOCK, Registries.ITEM)
                 .setTab(getTab(creativeTabRL))
                 .copyParentDrop()
                 .addRecipe(modRes("stripped_spiked_oak_palisade"))
-                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_CORE))
-                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_SIDE))
-                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_TOP))
+                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_CORE), PaletteStrategies.STRIPPED_LOG_SIDE_STANDARD)
+                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_SIDE), PaletteStrategies.STRIPPED_LOG_SIDE_STANDARD)
+                .addTexture(modRes(BLOCK_STRIPPED_OAK_PALISADE_TOP), PaletteStrategies.STRIPPED_LOG_TOP_STANDARD)
                 .build();
         this.addEntry(strippedSpikedPalisade);
 
+    }
+
+    public SoundType getSoundFromChild(WoodType woodType, String key) {
+        if (woodType.hasChild(key)) {
+            Object child = woodType.getChild(key);
+            if (child instanceof Block block) {
+                return block.defaultBlockState().getSoundType();
+            }
+        }
+        return woodType.canBurn() ? SoundType.WOOD : SoundType.STEM;
     }
     
     public Supplier<Block> getPalisadeForm(WoodType woodType, PalisadeForm palisadeForm){

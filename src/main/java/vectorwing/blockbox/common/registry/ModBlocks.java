@@ -227,7 +227,11 @@ public class ModBlocks
 	}
 
 	public static Block netherPalisade(Supplier<Block> spikedForm, @Nullable Supplier<Block> strippedForm, MapColor mapColor) {
-		return new PalisadeBlock(spikedForm, strippedForm, PROPERTIES_PALISADE.mapColor(mapColor).sound(SoundType.STEM));
+		return netherPalisade(spikedForm, strippedForm, mapColor, SoundType.STEM);
+	}
+
+	public static Block netherPalisade(Supplier<Block> spikedForm, @Nullable Supplier<Block> strippedForm, MapColor mapColor, SoundType soundType) {
+		return new PalisadeBlock(spikedForm, strippedForm, PROPERTIES_PALISADE.mapColor(mapColor).sound(soundType));
 	}
 
 	public static Block spikedPalisade(@Nullable Supplier<Block> strippedForm, MapColor mapColor) {
@@ -238,7 +242,11 @@ public class ModBlocks
 		return new SpikedPalisadeBlock(strippedForm, PROPERTIES_PALISADE.mapColor(mapColor).sound(soundType).ignitedByLava());
 	}
 
+	public static Block netherSpikedPalisade(@Nullable Supplier<Block> strippedForm, MapColor mapColor, SoundType soundType) {
+		return new SpikedPalisadeBlock(strippedForm, PROPERTIES_PALISADE.mapColor(mapColor).sound(soundType));
+	}
+
 	public static Block netherSpikedPalisade(@Nullable Supplier<Block> strippedForm, MapColor mapColor) {
-		return new SpikedPalisadeBlock(strippedForm, PROPERTIES_PALISADE.mapColor(mapColor).sound(SoundType.STEM));
+		return netherSpikedPalisade(strippedForm, mapColor, SoundType.STEM);
 	}
 }
